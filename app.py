@@ -17,6 +17,19 @@ CREATE TABLE IF NOT EXISTS reports(
 )
        """)
 connection.commit()
+try:
+    cursor.execute("ALTER TABLE reports ADD COLUMN date TEXT")
+except sqlite3.OperationalError:
+    pass
+
+try:
+    cursor.execute("ALTER TABLE reports ADD COLUMN time TEXT")
+except sqlite3.OperationalError:
+    pass
+
+connection.commit()
+
+
 st.title("🛡️ CAMPUS SAFE")
 st.caption("your safety,your voice,your campus")
 st.divider()
