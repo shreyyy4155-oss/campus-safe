@@ -6,6 +6,8 @@ cursor.execute("""
 CREATE TABLE IF NOT EXISTS reports(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         incident TEXT,
+        date TEXT,
+        time TEXT,
         location TEXT,
         description TEXT,
         identity TEXT,
@@ -46,10 +48,12 @@ elif st.session_state.page=="reporting":
       if st.button("submit report"):
         cursor.execute("""
         INSERT INTO reports
-        (incident,location,description,identity,name,contact,status)
-        VALUES(?,?,?,?,?,?,?)
+        (incident,date,time,location,description,identity,name,contact,status)
+        VALUES(?,?,?,?,?,?,?,?,?)
         """,(
           incident,
+          date,
+          time,
           location,
           description,
           identity,
@@ -58,7 +62,7 @@ elif st.session_state.page=="reporting":
           "pending"
         ))
         connection.commit()
-        st.success("creport submitted succesfully")
+        st.success("report submitted succesfully")
       if st.button("🔙back"):
         st.session_state.page="home"
         st.rerun()
@@ -89,12 +93,14 @@ elif st.session_state.page=="reports":
         for report in reports:
            st.write("report id:",report[0])
            st.write("incident:",report[1])
-           st.write("location:",report[2])
-           st.write("description:",report[3])
-           st.write("identity status:",report[4])
-           st.write("name:",report[5])
-           st.write("contact:",report[6])
-           st.write("status:",report[7])
+           st.write("date:",report[2])
+           st.write("time:",report[3])
+           st.write("location:",report[4])
+           st.write("description:",report[5])
+           st.write("identity status:",report[6])
+           st.write("name:",report[7])
+           st.write("contact:",report[8])
+           st.write("status:",report[9])
       if st.button("🔙back"):
         st.session_state.page="home"
         st.rerun()
